@@ -1,0 +1,36 @@
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@2.1.0
+
+executors:
+  with-chrome:
+    docker:
+      - image: "cypress/browsers:node14.17.0-chrome91-ff89"
+    resource_class: medium
+
+commands:
+  e2e-tests:
+    steps:
+      - run:
+          name: e2e Jira Clone Tests
+          command: npx cypress run --browser=chrome
+
+workflows:
+  build-and-test:
+    jobs:
+      - cypress/install:
+          name: Install
+          cache-key: cache-{{ arch }}--{{ checksum "package.json"}}
+          post-steps:
+            - run:
+                name: Install
+                command: npm ci
+      - cypress/run:
+          name: Run e2e tests
+          executor: with-chrome
+          browser: chrome
+          no-workspace: true
+          store_artifacts: true
+          requires:
+            - Install
+          spec: cypress/e2e/*
