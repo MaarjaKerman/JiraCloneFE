@@ -6,14 +6,10 @@ on:
       - master
 
 jobs:
-  cypress:
+  trigger-circleci:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@master
-
-      - name: Trigger exiting circleci job
-        uses: zivkaziv/circleci-trigger-github-action@master
-        with:
-          token: ${{ secrets.CIRCLE_CI_TOKEN }}
-          branch: master
+      - name: Run tests
+        uses: circleci/trigger_circleci_pipeline@v1.0
+        env:
+          CCI_TOKEN: $

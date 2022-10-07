@@ -2,6 +2,20 @@ version: 2.1
 orbs:
   cypress: cypress-io/cypress@2.1.0
 
+parameters:
+  GHA_Event:
+    type: string
+    default: ""
+  GHA_Actor:
+    type: string
+    default: ""
+  GHA_Action:
+    type: string
+    default: ""
+  GHA_Meta:
+    type: string
+    default: ""
+
 executors:
   with-chrome:
     docker:
@@ -15,25 +29,24 @@ commands:
           name: e2e Jira Clone Tests
           command: npx cypress run --browser=chrome
 
-cypress:
-  - cypress:
-      name: Install
-      cache-key: cache-{{ arch }}--{{ checksum "package.json"}}
-      post-steps:
-        - run:
-            name: Install
-            command: npm ci
-  - run:
-      name: Run e2e tests
-      executor: with-chrome
-      browser: chrome
-      no-workspace: true
-      store_artifacts: true
-      requires:
-        - Install
-      spec: cypress/e2e/*
-
 workflows:
   build-and-test:
+    when:
+      equal: [ "push", << pipeline.parameters.GHA_Event >> ]
     jobs:
-      - cypress
+      - cypress:
+          name: Install
+          cache-key: cache-{{ arch }}--{{ checksum "package.json"}}
+          post-steps:
+            - run:
+                name: Install
+                command: npm ci
+      - run:
+          name: Run e2e tests
+          executor: with-chrome
+          browser: chrome
+          no-workspace: true
+          store_artifacts: true
+          requires:
+            - Install
+          spec: cypress/e2e/*
