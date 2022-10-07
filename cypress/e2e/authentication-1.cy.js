@@ -1,12 +1,9 @@
-import { testid } from '../support/utils';
-
-describe('Authentication', () => {
+describe('Authentication and verifying default setup', () => {
   beforeEach(() => {
-    // cy.resetDatabase();
     cy.visit('/');
   });
 
-  it('creates guest account if user has no auth token', () => {
+  it('Should create guest account if user has no auth token and verify default amount of issues on board', () => {
     cy.window()
       .its('localStorage.authToken')
       .should('be.undefined');
@@ -16,6 +13,6 @@ describe('Authentication', () => {
       .should('be.a', 'string')
       .and('not.be.empty');
 
-    cy.get(testid`list-issue`).should('have.length', 8);
+    cy.get('[data-testid="list-issue"]').should('have.length', 8);
   });
 });

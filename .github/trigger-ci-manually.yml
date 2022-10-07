@@ -1,0 +1,14 @@
+name: Trigger manually JIRA clone e2e
+
+on:
+  workflow_dispatch
+
+jobs:
+  trigger-cicrcleci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: e2e-tests
+        id: 'e2e-tests'
+        uses: CircleCI-Public/trigger-circleci-pipeline-action@v1.0.5
+        env:
+          CCI_TOKEN: ${{ secrets.CCI_TOKEN }}
