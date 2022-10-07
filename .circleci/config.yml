@@ -15,22 +15,25 @@ commands:
           name: e2e Jira Clone Tests
           command: npx cypress run --browser=chrome
 
+cypress:
+  - cypress:
+      name: Install
+      cache-key: cache-{{ arch }}--{{ checksum "package.json"}}
+      post-steps:
+        - run:
+            name: Install
+            command: npm ci
+  - run:
+      name: Run e2e tests
+      executor: with-chrome
+      browser: chrome
+      no-workspace: true
+      store_artifacts: true
+      requires:
+        - Install
+      spec: cypress/e2e/*
+
 workflows:
   build-and-test:
     jobs:
-      - cypress/install:
-          name: Install
-          cache-key: cache-{{ arch }}--{{ checksum "package.json"}}
-          post-steps:
-            - run:
-                name: Install
-                command: npm ci
-      - cypress/run:
-          name: Run e2e tests
-          executor: with-chrome
-          browser: chrome
-          no-workspace: true
-          store_artifacts: true
-          requires:
-            - Install
-          spec: cypress/e2e/*
+      - cypress
