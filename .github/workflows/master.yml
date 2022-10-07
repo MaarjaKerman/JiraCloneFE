@@ -1,4 +1,4 @@
-name: Trigger CircleCi job
+name: Trigger tests
 
 on:
   push:
@@ -6,10 +6,26 @@ on:
       - master
 
 jobs:
-  trigger-circleci:
+  install:
     runs-on: ubuntu-latest
+    container:
+      image: cypress/browsers:node16.13.0-chrome95-ff94
     steps:
-      - name: Run tests
-        uses: CircleCI-Public/trigger-circleci-pipeline-action@v1.0.5
-        env:
-          CCI_TOKEN: $
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cypress install
+        uses: cypress-io/github-action@v4
+        with:
+          runTests: false
+      # report machine parameters
+      - run: node --version
+      - run: node -p 'os.cpus()'
+      - run: npm ci
+
+      - name: Save build folder
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          if-no-files-found: error
+          path: build
