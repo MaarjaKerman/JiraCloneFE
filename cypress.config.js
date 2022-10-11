@@ -7,5 +7,6 @@ module.exports = defineConfig({
     },
     baseUrl: 'https://jira.ivorreic.com/project/board',
     defaultCommandTimeout: 30000,
+    projectId: "nb4inc",
   },
 });
