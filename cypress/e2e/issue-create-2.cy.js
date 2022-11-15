@@ -40,7 +40,9 @@ describe('Issue create', () => {
 
   it('Should validate title is required field if missing', () => {
     cy.get('[data-testid="modal:issue-create"]').within(() => {
-      cy.get('button[type="submit"]').click();
+      cy.get('[data-testid="select:reporterId"]').children().then(()=>{
+        cy.get('button[type="submit"]').click();
+      })
       cy.get('[data-testid="form-field:title"]').scrollIntoView().should('contain', 'This field is required');
     });
   });
