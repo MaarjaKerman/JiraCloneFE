@@ -6,7 +6,11 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
     baseUrl: 'https://jira.ivorreic.com/',
+    env: {
+      baseUrl: 'https://jira.ivorreic.com/',
+    },
     defaultCommandTimeout: 30000,
+    requestTimeout: 15000,
     projectId: "nb4inc",
   },
 });

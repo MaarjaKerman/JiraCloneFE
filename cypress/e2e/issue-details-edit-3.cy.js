@@ -34,7 +34,7 @@
 describe('Issue details editing', () => {
   beforeEach(() => {
     cy.visit('/');
-    cy.url().should('eq', 'http://34.247.67.214:8080/project').then((url) => {
+    cy.url().should('eq', `${Cypress.env('baseUrl')}project`).then((url) => {
       cy.visit(url + '/board');
       cy.contains('This is an issue of type: Task.').click();
     });
