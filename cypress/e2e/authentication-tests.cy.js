@@ -13,6 +13,7 @@ describe('Authentication and verifying default setup', () => {
       .should('be.a', 'string')
       .and('not.be.empty');
 
+    //Assert total amount of issues on the board  
     cy.get('[data-testid="list-issue"]').should('have.length', 8);
   });
 });

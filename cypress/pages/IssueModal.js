@@ -27,7 +27,7 @@ class IssueModal {
     }
 
     editTitle(title) {
-        cy.get(this.title).type(title);
+        cy.get(this.title).debounced('type', title);
     }
 
     editDescription(description) {
@@ -37,16 +37,16 @@ class IssueModal {
     createIssue(issueDetails) {
         this.getIssueModal().within(() => {
             this.selectIssueType(issueDetails.type);
-            this.editTitle(issueDetails.title);
             this.editDescription(issueDetails.description);
+            this.editTitle(issueDetails.title);
             this.selectAssignee(issueDetails.assignee);
-
             cy.get(this.submitButton).click();
         });
     }
 
     ensureIssueIsCreated(expectedAmountIssues, issueDetails) {
         cy.get(this.issueModal).should('not.exist');
+        cy.reload();
         cy.contains('Issue has been successfully created.').should('not.exist');
 
         cy.get(this.backlogList).should('be.visible').and('have.length', '1').within(() => {
