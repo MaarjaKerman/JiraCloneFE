@@ -7,6 +7,8 @@ describe('Issue comments creating, editing and deleting', () => {
         });
     });
 
+    const getIssueDetailsModal = () => cy.get('[data-testid="modal:issue-details"]');
+
     it('Should create a comment successfully', () => {
         const comment = 'TEST_COMMENT';
 
@@ -67,6 +69,4 @@ describe('Issue comments creating, editing and deleting', () => {
             .find('[data-testid="issue-comment"]')
             .should('not.exist');
     });
-
-    const getIssueDetailsModal = () => cy.get('[data-testid="modal:issue-details"]');
 });

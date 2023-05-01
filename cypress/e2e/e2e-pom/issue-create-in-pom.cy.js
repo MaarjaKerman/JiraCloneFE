@@ -1,8 +1,6 @@
 /**
- * Workshop #14
- * This is an example file and approach for OOP in Cypress
+ * This is an example file and approach for POM in Cypress
  */
-/// <reference types="Cypress" />
 import IssueModal from "../../pages/IssueModal";
 
 describe('Issue create', () => {
