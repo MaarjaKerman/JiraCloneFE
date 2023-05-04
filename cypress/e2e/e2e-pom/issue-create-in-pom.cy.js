@@ -7,10 +7,12 @@ describe('Issue create', () => {
   beforeEach(() => {
     cy.visit('/');
     cy.url().should('eq', 'https://jira.ivorreic.com/project').then((url) => {
-      cy.visit(url + '/board?modal-issue-create=true');
+    //open isse creation modal  
+    cy.visit(url + '/board?modal-issue-create=true');
     });
   });
 
+  //data set with which we are creating issue, saved as variable
   const issueDetails = {
     title: "TEST_TITLE",
     type: "Bug",
@@ -18,6 +20,7 @@ describe('Issue create', () => {
     assignee: "Lord Gaben",
   };
 
+  //number of issues we expect to see in the backlog after the test
   const EXPECTED_AMOUNT_OF_ISSUES = '5';
 
   it('Should create issue successfully', () => {
