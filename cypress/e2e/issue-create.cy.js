@@ -15,7 +15,6 @@ describe('Issue create', () => {
       cy.get('[data-testid="select:type"]').click();
       cy.get('[data-testid="select-option:Story"]')
           .trigger('click');
-
             
       //Type value to description input field
       cy.get('.ql-editor').type('TEST_DESCRIPTION');
