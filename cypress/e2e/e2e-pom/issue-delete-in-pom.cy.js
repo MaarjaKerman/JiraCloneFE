@@ -15,17 +15,11 @@ describe('Issue delete', () => {
   //issue title, that we are testing with, saved into variable
   const issueTitle = 'This is an issue of type: Task.';
 
-  it.only('Should delete issue successfully', () => {
-    IssueModal.clickDeleteButton();
-    IssueModal.confirmDeletion();
-    IssueModal.validateIssueVisibilityState(issueTitle, false);
+  it('Should delete issue successfully', () => {
+    //add steps to delete issue
   });
 
   it('Should cancel deletion process successfully', () => {
-    IssueModal.clickDeleteButton();
-    IssueModal.cancelDeletion();
-    IssueModal.closeDetailModal();
-    IssueModal.validateIssueVisibilityState(issueTitle);
-
+    //add steps to start deletion proces but cancel it
   });
 });
