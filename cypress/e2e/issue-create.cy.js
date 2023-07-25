@@ -1,5 +1,3 @@
-import { faker } from '@faker-js/faker';
-
 describe('Issue create', () => {
   beforeEach(() => {
     cy.visit('/');
@@ -9,20 +7,22 @@ describe('Issue create', () => {
     });
   });
 
-  const myDescrition = faker.lorem.sentence();
-  const variableName = 'Variable content';
-
-  it.only('Should create an issue and validate it successfully', () => {
+  it('Should create an issue and validate it successfully', () => {
     //System finds modal for creating issue and does next steps inside of it
     cy.get('[data-testid="modal:issue-create"]').within(() => {
+      
       //open issue type dropdown and choose Story
       cy.get('[data-testid="select:type"]').click();
       cy.get('[data-testid="select-option:Story"]')
           .trigger('click');
             
       //Type value to description input field
-      cy.get('.ql-editor').type(myDescrition);
-      cy.get('input[name="title"]').type(variableName);
+      cy.get('.ql-editor').type('TEST_DESCRIPTION');
+
+      //Type value to title input field
+      //Order of filling in the fields is first description, then title on purpose
+      //Otherwise filling title first sometimes doesn't work due to web page implementation
+      cy.get('input[name="title"]').type('TEST_TITLE');
       
       //Select Lord Gaben from reporter dropdown
       cy.get('[data-testid="select:userIds"]').click();
@@ -30,7 +30,6 @@ describe('Issue create', () => {
 
       //Click on button "Create issue"
       cy.get('button[type="submit"]').click();
-      cy.get('selector').should('have.text', title)
     });
 
     //Assert that modal window is closed and successful message is visible
