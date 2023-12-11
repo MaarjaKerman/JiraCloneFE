@@ -9,17 +9,7 @@ describe('Issue create', () => {
 
   it('Should create an issue and validate it successfully', () => {
     // System finds modal for creating issue and does next steps inside of it
-    cy.get('[data-testid="modal:issue-create"]').within(() => {
-      
-      // Open issue type dropdown and choose Story
-      cy.get('[data-testid="select:type"]').click();
-      cy.get('[data-testid="select-option:Story"]')
-        .wait(1000)
-        .trigger('mouseover')
-        .trigger('click');
-
-      cy.get('[data-testid="icon:story"]').should('be.visible');
-            
+    cy.get('[data-testid="modal:issue-create"]').within(() => { 
       // Type value to description input field
       cy.get('.ql-editor').type('TEST_DESCRIPTION');
 
@@ -27,6 +17,14 @@ describe('Issue create', () => {
       // Order of filling in the fields is first description, then title on purpose
       // Otherwise filling title first sometimes doesn't work due to web page implementation
       cy.get('input[name="title"]').type('TEST_TITLE');
+
+      // Open issue type dropdown and choose Story
+      cy.get('[data-testid="select:type"]').click();
+      cy.get('[data-testid="select-option:Story"]')
+        .wait(1000)
+        .trigger('mouseover')
+        .trigger('click');
+      cy.get('[data-testid="icon:story"]').should('be.visible');
       
       // Select Lord Gaben from assignee dropdown
       cy.get('[data-testid="select:userIds"]').click();
