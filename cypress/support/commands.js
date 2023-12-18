@@ -5,3 +5,17 @@ Cypress.Commands.add('debounced', { prevSubject: true }, (input, action, value) 
     cy.wrap(input)[action](value);
     cy.tick(1000);
 });
+
+Cypress.Commands.add('assertReloadAssert', (assertFunc) => {
+    assertFunc();
+    cy.reload();
+    assertFunc();
+  });
+  
+  Cypress.Commands.add('waitForXHR', (method, url, funcThatTriggersXHR) => {
+    const alias = method + url;
+    cy.server();
+    cy.route(method, url).as(alias);
+    funcThatTriggersXHR();
+    cy.wait(`@${alias}`);
+  });
