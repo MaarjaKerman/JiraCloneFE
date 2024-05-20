@@ -27,8 +27,12 @@ describe('Issue create', () => {
       cy.get('[data-testid="select-option:Story"]').wait(1000).trigger('mouseover').trigger('click');
       cy.get('[data-testid="icon:story"]').should('be.visible');
 
-      // Select Pickle Rick from reporter dropdown
+      // Select Baby Yoda from reporter dropdown
       cy.get('[data-testid="select:reporterId"]').click();
+      cy.get('[data-testid="select-option:Baby Yoda"]').click();
+
+      // Select Baby Yoda from assignee dropdown
+      cy.get('[data-testid="form-field:userIds"]').click();
       cy.get('[data-testid="select-option:Pickle Rick"]').click();
 
       // Click on button "Create issue"
@@ -58,7 +62,7 @@ describe('Issue create', () => {
           .siblings()
           .within(() => {
             //Assert that correct avatar and type icon are visible
-            cy.get('[data-testid="avatar:Lord Gaben"]').should('be.visible');
+            cy.get('[data-testid="avatar:Pickle Rick"]').should('be.visible');
             cy.get('[data-testid="icon:story"]').should('be.visible');
           });
       });
@@ -67,7 +71,7 @@ describe('Issue create', () => {
       .contains('TEST_TITLE')
       .within(() => {
         // Assert that correct avatar and type icon are visible
-        cy.get('[data-testid="avatar:Lord Gaben"]').should('be.visible');
+        cy.get('[data-testid="avatar:Pickle Rick"]').should('be.visible');
         cy.get('[data-testid="icon:story"]').should('be.visible');
       });
   });
