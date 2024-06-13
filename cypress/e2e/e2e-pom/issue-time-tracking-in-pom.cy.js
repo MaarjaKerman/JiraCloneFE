@@ -12,8 +12,8 @@ describe("Issue time tracking", () => {
   });
 
   const issueDetails = {
-    title: "Test Issue Title",
-    description: "Test Issue Description",
+    title: faker.lorem.words(5),
+    description: faker.lorem.sentence(2),
   };
 
   const expectedAmountIssues = 5;
@@ -25,10 +25,10 @@ describe("Issue time tracking", () => {
   it("Should add, edit and remove time estimation successfully", () => {
     IssueTimeTracking.createIssue(issueDetails);
     IssueTimeTracking.ensureIssueVisible(expectedAmountIssues, issueDetails);
-    IssueTimeTracking.addEstimation(issueDetails);
-    IssueTimeTracking.ensureEstimationSaved();
-    IssueTimeTracking.updateEstimation();
-    IssueTimeTracking.ensureEstimationUpdated();
+    IssueTimeTracking.addEstimation(issueDetails,initialTimeEstimation);
+    IssueTimeTracking.ensureEstimationSaved(initialTimeEstimation);
+    IssueTimeTracking.updateEstimation(updatedTimeEstimation);
+    IssueTimeTracking.ensureEstimationUpdated(updatedTimeEstimation);
     IssueTimeTracking.removeEstimation();
     IssueTimeTracking.ensureEstimationRemoved();
   });
@@ -38,7 +38,7 @@ describe("Issue time tracking", () => {
     IssueTimeTracking.ensureIssueVisible(expectedAmountIssues, issueDetails);
     IssueTimeTracking.logTime(issueDetails, spentTime, remainingTime);
     IssueTimeTracking.ensureTimeLogged(issueDetails, spentTime, remainingTime);
-    IssueTimeTracking.removeLoggedTime(issueDetails,spentTime,remainingTime);
-    IssueTimeTracking.ensureTimeRemoved(issueDetails, spentTime, remainingTime);
-});
+    IssueTimeTracking.removeLoggedTime(issueDetails);
+    IssueTimeTracking.ensureTimeRemoved(issueDetails);
+  });
 });

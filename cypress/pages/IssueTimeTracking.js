@@ -32,6 +32,7 @@ class IssueTimeTracking {
     cy.get(this.descriptionInput).type(description);
   }
 
+  //Creating a new issue for the time tracking tests//
   createIssue(issueDetails) {
     this.getIssueModal().within(() => {
       this.typeDescription(issueDetails.description);
@@ -56,6 +57,7 @@ class IssueTimeTracking {
       });
   }
 
+//Adding initial estimated time and confirming the visibility//
   addEstimation(issueDetails) {
     cy.get(this.backlogList).contains(issueDetails.title).click();
     cy.contains(issueDetails.title, { timeout: 10000 }).should("be.visible");
@@ -76,6 +78,7 @@ class IssueTimeTracking {
     });
   }
 
+  //Updating the estimated time and confirming the update//
   updateEstimation() {
     cy.get(this.issuesList).first().click();
     cy.get(this.issueDetailModal, { timeout: 60000 }).within(() => {
@@ -94,6 +97,7 @@ class IssueTimeTracking {
     });
   }
 
+  //Removing the estimated time and confirming the removal//
   removeEstimation() {
     cy.get(this.issuesList).first().click();
     cy.get(this.issueDetailModal, { timeout: 60000 }).within(() => {
@@ -113,6 +117,7 @@ class IssueTimeTracking {
     });
   }
 
+  //Logging spent time and remaining time and confirming the visibility//
   logTime(issueDetails, spentTime, remainingTime) {
     cy.get(this.backlogList).contains(issueDetails.title).click();
     cy.get(this.issueDetailModal, { timeout: 60000 }).within(() => {
@@ -135,7 +140,7 @@ class IssueTimeTracking {
     cy.get(this.closeDetailModalButton).click();
   }
 
-  ensureTimeLogged(issueDetails, spentTime, remainingTime) {
+  ensureTimeLogged(issueDetails,spentTime, remainingTime) {
     cy.get(this.backlogList).contains(issueDetails.title).click();
     cy.get(this.issueDetailModal).within(() => {
       cy.contains(`${spentTime}h logged`).should("be.visible");
@@ -143,8 +148,11 @@ class IssueTimeTracking {
     });
   }
 
+//Removing the logged time for both spent and remaining and confirming the removal//
   removeLoggedTime(issueDetails) {
-    cy.get(this.backlogList).contains(issueDetails.title).click({ force: true });
+    cy.get(this.backlogList)
+      .contains(issueDetails.title)
+      .click({ force: true });
     cy.get(this.issueDetailModal).within(() => {
       cy.get(this.logTimeIcon).click();
     });
@@ -159,15 +167,17 @@ class IssueTimeTracking {
         .should("have.attr", "value", "");
       cy.get(this.doneButton).click();
     });
-    }
+  }
 
   ensureTimeRemoved(issueDetails) {
-    cy.get(this.backlogList).contains(issueDetails.title).click({ force: true });
+    cy.get(this.backlogList)
+      .contains(issueDetails.title)
+      .click({ force: true });
     cy.get(this.issueDetailModal).within(() => {
       cy.contains(this.noTimeLogged).should("exist");
       cy.get(this.closeDetailModalButton).first().click();
-        });
-    }
+    });
+  }
 }
 
 export default new IssueTimeTracking();
