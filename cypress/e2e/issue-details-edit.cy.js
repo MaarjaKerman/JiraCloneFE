@@ -117,9 +117,5 @@ describe("Issue details editing", () => {
           });
       });
     });
-  // Assignment 3, Test 2 //
-
-  it.only("Should verifY that the application is removing unnecessary spaces on the board view", () => {
-
-  });
+    });
 });
