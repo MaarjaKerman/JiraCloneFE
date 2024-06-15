@@ -57,41 +57,41 @@ class IssueTimeTracking {
       });
   }
 
-//Adding initial estimated time and confirming the visibility//
-  addEstimation(issueDetails) {
+  //Adding initial estimated time and confirming the visibility//
+  addEstimation(issueDetails, initialTimeEstimation) {
     cy.get(this.backlogList).contains(issueDetails.title).click();
     cy.contains(issueDetails.title, { timeout: 10000 }).should("be.visible");
     cy.get(this.issueDetailModal, { timeout: 60000 }).within(() => {
       cy.contains(this.noTimeLogged).should("be.visible");
-      cy.get(this.estimationInput).type("10");
+      cy.get(this.estimationInput).type(initialTimeEstimation);
       cy.get(this.closeDetailModalButton).first().click();
       cy.get(this.issueDetailModal).should("not.exist");
     });
   }
 
-  ensureEstimationSaved() {
+  ensureEstimationSaved(initialTimeEstimation) {
     cy.get(this.issuesList).first().click();
     cy.get(this.issueDetailModal).within(() => {
-      cy.get(this.estimationInput).should("have.value", "10");
+      cy.get(this.estimationInput).should("have.value", initialTimeEstimation);
       cy.get(this.closeDetailModalButton).first().click();
       cy.get(this.issueDetailModal).should("not.exist");
     });
   }
 
   //Updating the estimated time and confirming the update//
-  updateEstimation() {
+  updateEstimation(updatedTimeEstimation) {
     cy.get(this.issuesList).first().click();
     cy.get(this.issueDetailModal, { timeout: 60000 }).within(() => {
-      cy.get(this.estimationInput).clear().type("20");
+      cy.get(this.estimationInput).clear().type(updatedTimeEstimation);
       cy.get(this.closeDetailModalButton).first().click();
       cy.get(this.issueDetailModal).should("not.exist");
     });
   }
 
-  ensureEstimationUpdated() {
+  ensureEstimationUpdated(updatedTimeEstimation) {
     cy.get(this.issuesList).first().click();
     cy.get(this.issueDetailModal).within(() => {
-      cy.get(this.estimationInput).should("have.value", "20");
+      cy.get(this.estimationInput).should("have.value", updatedTimeEstimation);
       cy.get(this.closeDetailModalButton).first().click();
       cy.get(this.issueDetailModal).should("not.exist");
     });
@@ -140,7 +140,7 @@ class IssueTimeTracking {
     cy.get(this.closeDetailModalButton).click();
   }
 
-  ensureTimeLogged(issueDetails,spentTime, remainingTime) {
+  ensureTimeLogged(issueDetails, spentTime, remainingTime) {
     cy.get(this.backlogList).contains(issueDetails.title).click();
     cy.get(this.issueDetailModal).within(() => {
       cy.contains(`${spentTime}h logged`).should("be.visible");
@@ -148,7 +148,7 @@ class IssueTimeTracking {
     });
   }
 
-//Removing the logged time for both spent and remaining and confirming the removal//
+  //Removing the logged time for both spent and remaining and confirming the removal//
   removeLoggedTime(issueDetails) {
     cy.get(this.backlogList)
       .contains(issueDetails.title)
